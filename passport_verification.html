@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Passport Verification</title>
+</head>
+<body>
+    <h1>Step 1: Take a Photo of Your Passport</h1>
+    <video id="video" width="320" height="240" autoplay></video><br>
+    <button id="snap">Take Photo</button>
+    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas><br>
+    <button id="next" style="display:none;" onclick="goToFaceStep()">Next: Verify Face</button>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const snap = document.getElementById('snap');
+        const next = document.getElementById('next');
+
+        // Access the camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+            })
+            .catch(function(err) {
+                console.log("Error: " + err);
+            });
+
+        // Capture the photo
+        snap.addEventListener('click', function() {
+            context.drawImage(video, 0, 0, 320, 240);
+            canvas.style.display = "block";
+            next.style.display = "inline";
+        });
+
+        // Go to face verification step
+        function goToFaceStep() {
+            window.location.href = "face_verification.html";
+        }
+    </script>
+</body>
+</html>

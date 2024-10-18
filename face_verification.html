@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Verification Simulation</title>
+    <style>
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            border: 2px solid green;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            left: calc(50% - 100px); /* Центрируем овал */
+            top: calc(50% - 100px);
+            pointer-events: none; /* Отключаем возможность взаимодействия с овалом */
+        }
+        #videoContainer {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <h1>Step 2: Verify Your Face</h1>
+    <p>Align your face within the circle and then move closer to the camera.</p>
+    <div id="videoContainer">
+        <video id="video" width="320" height="240" autoplay></video>
+        <div id="overlay"></div> <!-- Овал для выравнивания лица -->
+    </div>
+    <button id="start" onclick="startVerification()">I'm Ready</button>
+
+    <script>
+        const video = document.getElementById('video');
+        const overlay = document.getElementById('overlay');
+        const startButton = document.getElementById('start');
+
+        // Доступ к камере устройства
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+            })
+            .catch(function(err) {
+                console.log("Error: " + err);
+            });
+
+        function startVerification() {
+            startButton.style.display = 'none'; // Скрываем кнопку после начала проверки
+            alert("Align your face in the circle and move closer.");
+            // Здесь можно добавить таймер или индикатор завершения
+        }
+    </script>
+</body>
+</html>
